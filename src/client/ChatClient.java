@@ -15,6 +15,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.rmi.RemoteException;
@@ -99,21 +100,29 @@ public class ChatClient{
             throw new IOException();
         }
         DatagramPacket receivablePacket = getReceivableDatagramPacket();
-        clientDatagramSocket.receive(receivablePacket);
-        Object receivedObject = getObjectFromBytes(receivablePacket.getData());
-        List<Object> receivedObjectList = (List<Object>) receivedObject;
-        if(receivedObjectList.size() > 1){
-            updateClientToChatHistoryMap((List<String>) receivedObjectList.get(1));
-            Message receivedMessage = (Message) receivedObjectList.get(0);
-            if(isMessageSentByCurrentClient(receivedMessage)){
+        try{
+            clientDatagramSocket.receive(receivablePacket);
+            Object receivedObject = getObjectFromBytes(receivablePacket.getData());
+            List<Object> receivedObjectList = (List<Object>) receivedObject;
+            if(receivedObjectList.size() > 1){
+                updateClientToChatHistoryMap((List<String>) receivedObjectList.get(1));
+                Message receivedMessage = (Message) receivedObjectList.get(0);
+                if(isMessageSentByCurrentClient(receivedMessage)){
+                    return null;
+                }
+                return receivedMessage;
+            }
+            else{
+                updateClientToChatHistoryMap((List<String>) receivedObjectList.get(0));
                 return null;
             }
-            return receivedMessage;
         }
-        else{
-            updateClientToChatHistoryMap((List<String>) receivedObjectList.get(0));
-            return null;
-        }    
+        catch (SocketException e){
+            System.out.println(e.getCause());
+        }
+        return null;
+    }
+            
 //        if(receivedObject instanceof List){
 //            //Notify user on the UI
 //            mainFrame.showMessage((Message) receivedObject);
@@ -132,7 +141,7 @@ public class ChatClient{
 //        else{
 //            updateClientToChatHistoryMap((List<String>) receivedObject);
 //        }
-    }
+    
     
     private Object getObjectFromBytes(byte[] data) throws IOException, ClassNotFoundException{
         ByteArrayInputStream bis = new ByteArrayInputStream(data);
@@ -148,6 +157,9 @@ public class ChatClient{
     }
     
     public Set<String> getAvailableClients(){
+        if(clientToChatHistory == null){
+            return new HashSet<>();
+        }
         return this.clientToChatHistory.keySet();
     }
     

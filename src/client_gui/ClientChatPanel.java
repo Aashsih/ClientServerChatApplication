@@ -117,7 +117,7 @@ public class ClientChatPanel extends javax.swing.JFrame {
         DefaultListModel<String> model = new DefaultListModel<>();
         for (String availableClinet : chatSession.getAvailableClients()) {
             model.addElement(availableClinet);
-        }
+        }    
         this.listAvailableClients.setModel(model);
     }
     
