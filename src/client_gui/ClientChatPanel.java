@@ -113,12 +113,19 @@ public class ClientChatPanel extends javax.swing.JFrame {
     }
     
     private void notifyAvailableClientsHasChnaged(){
+        //Store the selected value before updating the list
+        String selectedValue = this.listAvailableClients.getSelectedValue();
         //Update the list
         DefaultListModel<String> model = new DefaultListModel<>();
         for (String availableClinet : chatSession.getAvailableClients()) {
             model.addElement(availableClinet);
         }    
         this.listAvailableClients.setModel(model);
+        //If the previously selected value is still in the list, then make that the current selected value
+        if(model.contains(selectedValue)){
+            int index = model.indexOf(selectedValue);
+            this.listAvailableClients.setSelectedIndex(index);
+        }
     }
     
     private void processServerMessage(Message message){
@@ -226,11 +233,6 @@ public class ClientChatPanel extends javax.swing.JFrame {
         });
 
         txtMessageField.setToolTipText("");
-        txtMessageField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtMessageFieldKeyPressed(evt);
-            }
-        });
 
         btnSendMessage.setText("Send");
         btnSendMessage.addActionListener(new java.awt.event.ActionListener() {
@@ -343,10 +345,6 @@ public class ClientChatPanel extends javax.swing.JFrame {
             txtAreaChatHistory.setText(chatSession.getClientChatHistory(listAvailableClients.getSelectedValue().toLowerCase()).toString());
         }
     }//GEN-LAST:event_listAvailableClientsValueChanged
-
-    private void txtMessageFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMessageFieldKeyPressed
-        sendMessage();
-    }//GEN-LAST:event_txtMessageFieldKeyPressed
 
     /**
      * @param args the command line arguments

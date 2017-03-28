@@ -6,7 +6,7 @@
 package server_client_message_protocol;
 
 import enums.MessageType;
-import java.rmi.RemoteException;
+
 
 /**
  *

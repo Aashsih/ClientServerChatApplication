@@ -34,7 +34,7 @@ public class PersonalMessage extends TCPMessage{
     
     
     @Override
-    public byte[] getEncapsulatedMessage() throws RemoteException {
+    public byte[] getEncapsulatedMessage() {
         if(sendTo == null){
             return null;
         }

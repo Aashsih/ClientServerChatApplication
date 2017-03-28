@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author aashi
  */
-public abstract class Message implements IMessage, Serializable{
+public abstract class Message implements Serializable{
     /**
      * Note: 
      * A better abstraction would be to make two further abstract subclasses
@@ -57,8 +57,7 @@ public abstract class Message implements IMessage, Serializable{
         return null;
     }
     
-    @Override
-    public byte[] getEncapsulatedMessage() throws RemoteException {
+    public byte[] getEncapsulatedMessage() {
         ByteArrayOutputStream bos = null;
         try {
             if(sentBy == null || message == null){
