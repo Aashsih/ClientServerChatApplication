@@ -23,7 +23,7 @@ public enum MessageType {
         }
     }
 
-    public static MessageType getCardiacPhase(String value){
+    public static MessageType getMessageType(String value){
         return valueToMessageType.get(value);
     }
 
