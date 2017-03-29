@@ -11,7 +11,7 @@ import enums.MessageType;
  *
  * @author aashi
  */
-public class ConnectMessage extends Message{
+public class ConnectMessage extends UDPMessage{
     private static final String CONNECT_MESSAGE = "joined the chat room";
     
     public ConnectMessage(String sentBy, String message) {
