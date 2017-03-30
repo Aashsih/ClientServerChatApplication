@@ -5,27 +5,15 @@
  */
 package server;
 
-import client.ChatClient;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
-import java.nio.ByteBuffer;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import server_client_message_protocol.BroadcastMessage;
@@ -33,7 +21,7 @@ import server_client_message_protocol.ConnectMessage;
 import server_client_message_protocol.DisconnectMessage;
 import server_client_message_protocol.Message;
 import server_client_message_protocol.PersonalMessage;
-import server_client_message_protocol.UDPMessage;
+
 
 /**
  *
@@ -159,7 +147,7 @@ public class ServerCommunicator{
             dos.write(encapsulatedMessage);
             System.out.println("Message routed to the client");
         } catch (RemoteException ex) {
-            Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(ServerCommunicator.class.getName()).log(Level.SEVERE, null, ex);
         } 
