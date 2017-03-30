@@ -144,7 +144,7 @@ public class ClientChatPanel extends javax.swing.JFrame {
     }
     
     private void showBroadcastMessage(BroadcastMessage message){
-        JOptionPane.showConfirmDialog(this, message.getMessage(), message.getSentBy() + "says:" , JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showConfirmDialog(this, message.getMessage(), message.getSentBy() + " says:" , JOptionPane.PLAIN_MESSAGE);
     }
     
     private class AvailableClientsListUpdater implements Runnable{
